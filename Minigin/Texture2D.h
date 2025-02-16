@@ -5,6 +5,8 @@
 struct SDL_Texture;
 namespace dae
 {
+	class GameObject;
+
 	/**
 	 * Simple RAII wrapper for an SDL_Texture
 	 */
@@ -15,6 +17,8 @@ namespace dae
 		explicit Texture2D(SDL_Texture* texture);
 		explicit Texture2D(const std::string& fullPath);
 		~Texture2D();
+
+		void Render(const GameObject& Object) const;
 
 		glm::ivec2 GetSize() const;
 

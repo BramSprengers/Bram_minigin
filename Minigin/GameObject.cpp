@@ -2,15 +2,24 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
+#include "TextObject.h"
+#include "Texture2D.h"
 
 dae::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update(){}
+void dae::GameObject::Update()
+{
+	if (m_text != nullptr)
+		m_text.get()->Update();
+}
 
 void dae::GameObject::Render() const
 {
-	const auto& pos = m_transform.GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+	if (m_texture != nullptr)
+		m_texture.get()->Render(*this);
+
+	if (m_text != nullptr)
+		m_text.get()->Render(*this);
 }
 
 void dae::GameObject::SetTexture(const std::string& filename)
@@ -21,4 +30,9 @@ void dae::GameObject::SetTexture(const std::string& filename)
 void dae::GameObject::SetPosition(float x, float y)
 {
 	m_transform.SetPosition(x, y, 0.0f);
+}
+
+void dae::GameObject::SetText(std::shared_ptr<TextObject> text)
+{
+	m_text = text;
 }

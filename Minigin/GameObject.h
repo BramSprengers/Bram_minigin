@@ -5,9 +5,10 @@
 namespace dae
 {
 	class Texture2D;
+	class TextObject;
 
 	// todo: this should become final.
-	class GameObject 
+	class GameObject final
 	{
 	public:
 		virtual void Update();
@@ -15,6 +16,10 @@ namespace dae
 
 		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
+
+		void SetText(std::shared_ptr<TextObject> text);
+
+		glm::vec3 GetPosition() const { return m_transform.GetPosition(); };
 
 		GameObject() = default;
 		virtual ~GameObject();
@@ -25,7 +30,8 @@ namespace dae
 
 	private:
 		Transform m_transform{};
-		// todo: mmm, every gameobject has a texture? Is that correct?
+
 		std::shared_ptr<Texture2D> m_texture{};
+		std::shared_ptr<TextObject> m_text{};
 	};
 }

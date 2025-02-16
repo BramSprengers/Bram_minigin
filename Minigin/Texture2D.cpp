@@ -3,10 +3,18 @@
 #include "Texture2D.h"
 #include "Renderer.h"
 #include <stdexcept>
+#include "GameObject.h"
 
 dae::Texture2D::~Texture2D()
 {
 	SDL_DestroyTexture(m_texture);
+}
+
+void dae::Texture2D::Render(const GameObject& Object) const
+{
+	const auto& pos = Object.GetPosition();
+	Renderer::GetInstance().RenderTexture(*this, pos.x, pos.y);
+
 }
 
 glm::ivec2 dae::Texture2D::GetSize() const

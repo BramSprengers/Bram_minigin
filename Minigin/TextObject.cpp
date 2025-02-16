@@ -30,11 +30,11 @@ void dae::TextObject::Update()
 	}
 }
 
-void dae::TextObject::Render() const
+void dae::TextObject::Render(const GameObject& object) const
 {
 	if (m_textTexture != nullptr)
 	{
-		const auto& pos = m_transform.GetPosition();
+		const auto& pos = object.GetPosition();
 		Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
 	}
 }
@@ -45,10 +45,3 @@ void dae::TextObject::SetText(const std::string& text)
 	m_text = text;
 	m_needsUpdate = true;
 }
-
-void dae::TextObject::SetPosition(const float x, const float y)
-{
-	m_transform.SetPosition(x, y, 0.0f);
-}
-
-
