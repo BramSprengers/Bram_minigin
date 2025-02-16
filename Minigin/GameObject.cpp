@@ -7,19 +7,21 @@
 
 dae::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update()
+void dae::GameObject::Update(float deltaTime)
 {
 	if (m_text != nullptr)
-		m_text.get()->Update();
+		m_text->Update();
+
+	deltaTime = 0;
 }
 
 void dae::GameObject::Render() const
 {
 	if (m_texture != nullptr)
-		m_texture.get()->Render(*this);
+		m_texture->Render(*this);
 
 	if (m_text != nullptr)
-		m_text.get()->Render(*this);
+		m_text->Render(*this);
 }
 
 void dae::GameObject::SetTexture(const std::string& filename)
