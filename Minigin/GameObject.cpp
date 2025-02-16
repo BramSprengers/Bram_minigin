@@ -32,7 +32,12 @@ void dae::GameObject::SetPosition(float x, float y)
 	m_transform.SetPosition(x, y, 0.0f);
 }
 
-void dae::GameObject::SetText(std::shared_ptr<TextObject> text)
+std::shared_ptr<dae::TextObject> dae::GameObject::GetTextObject()
+{
+	return m_text;
+}
+
+void dae::GameObject::SetTextObject(std::shared_ptr<TextObject> text)
 {
 	m_text = text;
 }

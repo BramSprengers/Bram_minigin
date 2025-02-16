@@ -7,7 +7,6 @@ namespace dae
 	class Texture2D;
 	class TextObject;
 
-	// todo: this should become final.
 	class GameObject final
 	{
 	public:
@@ -17,7 +16,8 @@ namespace dae
 		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
 
-		void SetText(std::shared_ptr<TextObject> text);
+		void SetTextObject(std::shared_ptr<TextObject> text);
+		std::shared_ptr<TextObject> GetTextObject();
 
 		glm::vec3 GetPosition() const { return m_transform.GetPosition(); };
 

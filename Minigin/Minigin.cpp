@@ -79,7 +79,7 @@ dae::Minigin::~Minigin()
 	SDL_Quit();
 }
 
-void dae::Minigin::Run(const std::function<void()>& load)
+void dae::Minigin::Run(const std::function<void()>& load,const std::function<void(float deltaTime)>& update)
 {
 	load();
 
@@ -109,7 +109,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 			lag -= fixedSteps;
 		}
 
-
+		update(deltaTime);
 		sceneManager.Update(deltaTime);
 		renderer.Render();
 

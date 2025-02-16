@@ -28,11 +28,11 @@ void Scene::RemoveAll()
 
 void Scene::Update(float deltaTime)
 {
-	deltaTime = 0;
 	for(auto& object : m_objects)
 	{
 		object->Update();
 	}
+	deltaTime = 0;
 }
 
 void Scene::Render() const
