@@ -13,7 +13,7 @@ dae::Texture2D::~Texture2D()
 void dae::Texture2D::Render() const
 {
 	
-	Renderer::GetInstance().RenderTexture(*this, this->GetOwner()->GetPosition().x, this->GetOwner()->GetPosition().x);
+	Renderer::GetInstance().RenderTexture(*this, this->GetOwner()->GetWorldPosition().x, this->GetOwner()->GetWorldPosition().y);
 
 }
 

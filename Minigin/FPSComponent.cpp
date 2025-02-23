@@ -1,8 +1,11 @@
 #include "FPSComponent.h"
+#include <iostream>
 
 void dae::FPSComponent::Update(float deltaTime)
 {
-	std::string fps{ std::to_string(int(deltaTime * 1000)) };
+	float time = deltaTime * 1000;
+
+	std::string fps{ std::to_string(time) + " FPS" };
 
 	m_FPSTexture->SetText(fps);
 }

@@ -1,8 +1,15 @@
 #include "Transform.h"
 
-void dae::Transform::SetPosition(const float x, const float y, const float z)
+void dae::Transform::SetWorldPosition(const float x, const float y, const float z)
 {
-	m_position.x = x;
-	m_position.y = y;
-	m_position.z = z;
+	m_worldPosition.x = x;
+	m_worldPosition.y = y;
+	m_worldPosition.z = z;
+}
+
+void dae::Transform::SetLocalposition(float x, float y, float z)
+{
+	m_localPosition.x = x;
+	m_localPosition.y = y;
+	m_localPosition.z = z;
 }
