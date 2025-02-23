@@ -19,7 +19,7 @@ namespace dae
 		Texture2D(const std::string& fullPath);
 		~Texture2D();
 
-		void Render() const;
+		void Render() const override;
 
 		glm::ivec2 GetSize() const;
 

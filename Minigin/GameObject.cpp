@@ -11,13 +11,27 @@ void dae::GameObject::AddComponent(BaseComponent* comp)
 	m_Components.emplace_back(std::move(comp));
 }
 
-dae::GameObject::~GameObject() = default;
+dae::GameObject::~GameObject()
+{
+	for (const auto& comp : m_Components)
+	{
+		delete comp;
+	}
+}
 
 void dae::GameObject::Update(float deltaTime)
 {
 	for(const auto& comp : m_Components)
 	{
 		comp->Update(deltaTime);
+	}
+}
+
+void dae::GameObject::FixedUpdate(float fixedTime)
+{
+	for (const auto& comp : m_Components)
+	{
+		comp->FixedUpdate(fixedTime);
 	}
 }
 

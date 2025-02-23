@@ -13,7 +13,7 @@ void dae::SceneManager::Fixed_Update(float fixedTime)
 {
 	for (const auto& scene : m_scenes)
 	{
-		scene->Update(fixedTime);
+		scene->FixedUpdate(fixedTime);
 	}
 }
 

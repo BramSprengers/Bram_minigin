@@ -37,11 +37,11 @@ void dae::TextObject::Update(float)
 	}
 }
 
-void dae::TextObject::Render(const GameObject& object) const
+void dae::TextObject::Render() const
 {
 	if (m_textTexture != nullptr)
 	{
-		const auto& pos = object.GetPosition();
+		const auto& pos = this->GetOwner()->GetPosition();
 		Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
 	}
 }
