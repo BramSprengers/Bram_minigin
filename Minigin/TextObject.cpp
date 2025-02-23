@@ -5,11 +5,18 @@
 #include "Font.h"
 #include "Texture2D.h"
 
-dae::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font) 
-	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
-{ }
+dae::TextObject::TextObject(GameObject* ob, const std::string& text, std::shared_ptr<Font> font) 
+	:BaseComponent(ob), m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
+{
 
-void dae::TextObject::Update()
+}
+
+dae::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font)
+	:BaseComponent(nullptr), m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
+{
+}
+
+void dae::TextObject::Update(float)
 {
 	if (m_needsUpdate)
 	{

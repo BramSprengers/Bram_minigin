@@ -1,23 +1,18 @@
 #pragma once
 #include <memory>
+#include <vector>
 #include "Transform.h"
+#include "BaseComponent.h"
 
 namespace dae
 {
-	class Texture2D;
-	class TextObject;
-
 	class GameObject final
 	{
 	public:
-		virtual void Update(float deltaTime);
-		virtual void Render() const;
+		void Update(float deltaTime);
+		void Render() const;
 
-		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
-
-		void SetTextObject(std::shared_ptr<TextObject> text);
-		std::shared_ptr<TextObject> GetTextObject();
 
 		glm::vec3 GetPosition() const { return m_transform.GetPosition(); };
 
@@ -31,7 +26,6 @@ namespace dae
 	private:
 		Transform m_transform{};
 
-		std::shared_ptr<Texture2D> m_texture{};
-		std::shared_ptr<TextObject> m_text{};
+		std::vector<std::shared_ptr<dae::BaseComponent>> m_Class{};
 	};
 }

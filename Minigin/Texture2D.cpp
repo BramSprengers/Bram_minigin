@@ -3,17 +3,17 @@
 #include "Texture2D.h"
 #include "Renderer.h"
 #include <stdexcept>
-#include "GameObject.h"
+#include "Gameobject.h"
 
 dae::Texture2D::~Texture2D()
 {
 	SDL_DestroyTexture(m_texture);
 }
 
-void dae::Texture2D::Render(const GameObject& Object) const
+void dae::Texture2D::Render() const
 {
-	const auto& pos = Object.GetPosition();
-	Renderer::GetInstance().RenderTexture(*this, pos.x, pos.y);
+	
+	Renderer::GetInstance().RenderTexture(*this, this->GetOwner()->GetPosition().x, this->GetOwner()->GetPosition().x);
 
 }
 
@@ -29,14 +29,14 @@ SDL_Texture* dae::Texture2D::GetSDLTexture() const
 	return m_texture;
 }
 
-dae::Texture2D::Texture2D(const std::string &fullPath)
+dae::Texture2D::Texture2D(GameObject* ob, const std::string &fullPath) : BaseComponent(ob)
 {
 	m_texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
 	if (m_texture == nullptr)
 		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
 }
 
-dae::Texture2D::Texture2D(SDL_Texture* texture)	: m_texture{ texture } 
+dae::Texture2D::Texture2D(GameObject* ob,SDL_Texture* texture) : BaseComponent(ob), m_texture{texture}
 {
 	assert(m_texture != nullptr);
 }

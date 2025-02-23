@@ -1,24 +1,23 @@
 #pragma once
 #include <vec2.hpp>
 #include <string>
+#include "BaseComponent.h"
 
 struct SDL_Texture;
 namespace dae
 {
-	class GameObject;
-
 	/**
 	 * Simple RAII wrapper for an SDL_Texture
 	 */
-	class Texture2D final
+	class Texture2D final : BaseComponent
 	{
 	public:
 		SDL_Texture* GetSDLTexture() const;
-		explicit Texture2D(SDL_Texture* texture);
-		explicit Texture2D(const std::string& fullPath);
+		explicit Texture2D(GameObject* ob, SDL_Texture* texture);
+		explicit Texture2D(GameObject* ob, const std::string& fullPath);
 		~Texture2D();
 
-		void Render(const GameObject& Object) const;
+		void Render() const;
 
 		glm::ivec2 GetSize() const;
 

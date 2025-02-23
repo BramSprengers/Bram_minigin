@@ -3,19 +3,21 @@
 #include <memory>
 #include "GameObject.h"
 #include "Transform.h"
+#include "BaseComponent.h"
 
 namespace dae
 {
 	class Font;
 	class Texture2D;
-	class TextObject final
+	class TextObject : BaseComponent
 	{
 	public:
-		void Update();
+		void Update(float DeltaTime) override;
 		void Render(const GameObject& object) const;
 
 		void SetText(const std::string& text);
 
+		TextObject(GameObject* ob, const std::string& text, std::shared_ptr<Font> font);
 		TextObject(const std::string& text, std::shared_ptr<Font> font);
 		virtual ~TextObject() = default;
 		TextObject(const TextObject& other) = delete;
