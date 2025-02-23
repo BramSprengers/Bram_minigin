@@ -16,6 +16,8 @@ namespace dae
 
 		glm::vec3 GetPosition() const { return m_transform.GetPosition(); };
 
+		void AddComponent(BaseComponent* comp);
+
 		GameObject() = default;
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -26,6 +28,6 @@ namespace dae
 	private:
 		Transform m_transform{};
 
-		std::vector<std::shared_ptr<dae::BaseComponent>> m_Class{};
+		std::vector<BaseComponent*> m_Components{};
 	};
 }

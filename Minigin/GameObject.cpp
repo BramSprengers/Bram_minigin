@@ -6,11 +6,16 @@
 #include "TextObject.h"
 #include "Texture2D.h"
 
+void dae::GameObject::AddComponent(BaseComponent* comp)
+{
+	m_Components.emplace_back(std::move(comp));
+}
+
 dae::GameObject::~GameObject() = default;
 
 void dae::GameObject::Update(float deltaTime)
 {
-	for(const auto& comp : m_Class)
+	for(const auto& comp : m_Components)
 	{
 		comp->Update(deltaTime);
 	}
@@ -18,7 +23,7 @@ void dae::GameObject::Update(float deltaTime)
 
 void dae::GameObject::Render() const
 {
-	for (const auto& comp : m_Class)
+	for (const auto& comp : m_Components)
 	{
 		comp->Render();
 	}

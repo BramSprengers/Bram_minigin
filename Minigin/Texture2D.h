@@ -9,12 +9,14 @@ namespace dae
 	/**
 	 * Simple RAII wrapper for an SDL_Texture
 	 */
-	class Texture2D final : BaseComponent
+	class Texture2D final : public BaseComponent
 	{
 	public:
 		SDL_Texture* GetSDLTexture() const;
-		explicit Texture2D(GameObject* ob, SDL_Texture* texture);
-		explicit Texture2D(GameObject* ob, const std::string& fullPath);
+		Texture2D(GameObject* ob, SDL_Texture* texture);
+		Texture2D(GameObject* ob, const std::string& fullPath);
+		Texture2D(SDL_Texture* texture);
+		Texture2D(const std::string& fullPath);
 		~Texture2D();
 
 		void Render() const;
