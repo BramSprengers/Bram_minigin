@@ -17,11 +17,17 @@ namespace dae
 		virtual void FixedUpdate(float fixedDeltaTime);
 		virtual void Render() const;
 
+		void MarktDead() { m_IsDead = true; }
+		bool IsDead() { return m_IsDead; }
+
+		void Remove() { delete this; }
+
 	protected:
 		GameObject* GetOwner() const { return m_pOwner; }
 
 	private:
 		GameObject* m_pOwner;
+		bool m_IsDead{ false };
 	};
 }
 

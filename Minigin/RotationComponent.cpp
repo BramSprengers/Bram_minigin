@@ -1,5 +1,4 @@
 #include "RotationComponent.h"
-#include "GameObject.h"
 
 void dae::RotationComponent::Update(float deltaTime)
 {
@@ -7,12 +6,12 @@ void dae::RotationComponent::Update(float deltaTime)
 	m_rot += radSpeed * deltaTime;
 
 	GameObject* ob = this->GetOwner()->GetParent();
-	glm::vec3 pos = this->GetOwner()->GetWorldPosition();
+	glm::vec3 pos = m_memPos;
 
 	if (ob != nullptr)
-		pos = ob->GetWorldPosition();
+		pos = { 0, 0, 0 };
 
-	glm::vec3 rotOfset = { sinf(m_rot) * m_rad, cosf(m_rot) * m_rad, 0 };
-
+	glm::vec3 rotOfset{ sinf(m_rot) * m_rad, cosf(m_rot) * m_rad, 0 };
+	
 	this->GetOwner()->SetLocalPosition(pos + rotOfset);
 }

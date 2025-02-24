@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
+#include "BaseComponent.h"
 #include "TextObject.h"
 #include "Texture2D.h"
 
@@ -46,6 +47,18 @@ void dae::GameObject::SetLocalPosition(const glm::vec3& pos)
 void dae::GameObject::SetPositionDirty()
 {
 	m_positionIsDirty = true;
+}
+
+void dae::GameObject::RemoveComp()
+{
+	for (auto& comp : m_Components)
+	{
+		if (comp->IsDead())
+		{
+			comp->Remove();
+			m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), comp), m_Components.end());
+		}
+	}
 }
 
 const glm::vec3& dae::GameObject::GetWorldPosition()

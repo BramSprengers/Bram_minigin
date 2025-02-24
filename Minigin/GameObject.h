@@ -30,16 +30,23 @@ namespace dae
 
 		void SetLocalPosition(const glm::vec3& pos);
 
+		void MarktForDel() { 
+			m_IsDead = true;
+			for (const auto& comp : m_Components)
+				comp->MarktDead();
+		}
+		bool IsMarktDead() { return m_IsDead; }
+		void RemoveComp();
+
 		const glm::vec3& GetWorldPosition();
 		//const glm::vec3& GetLocalPosition() { return m_localPosition; }
-
 		GameObject* GetParent() { return m_parent; }
-
 		size_t GetChildCount() const { return m_children.size(); }
-
 		GameObject* GetChildAt(unsigned int idx) const { return m_children[idx]; }
 
 	private:
+		bool m_IsDead{ false };
+
 		//Transform m_transform{};
 		void SetPositionDirty();
 		std::vector<BaseComponent*> m_Components{};
