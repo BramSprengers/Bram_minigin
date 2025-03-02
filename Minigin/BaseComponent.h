@@ -6,8 +6,9 @@ namespace dae
 	{
 	public:
 		explicit BaseComponent(GameObject* pOwner) : m_pOwner{ pOwner } {};
-		BaseComponent() : m_pOwner{} {};
+		//BaseComponent() : m_pOwner{} {};
 		virtual ~BaseComponent();
+
 		BaseComponent(const	BaseComponent& other) = delete;
 		BaseComponent(BaseComponent&& other) = delete;
 		BaseComponent& operator=(const	BaseComponent& other) = delete;
@@ -18,7 +19,7 @@ namespace dae
 		virtual void Render() const;
 
 		void MarktDead() { m_IsDead = true; }
-		bool IsDead() { return m_IsDead; }
+		bool IsDead() const { return m_IsDead; }
 
 		void Remove() { delete this; }
 

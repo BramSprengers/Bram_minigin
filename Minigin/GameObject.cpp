@@ -47,6 +47,10 @@ void dae::GameObject::SetLocalPosition(const glm::vec3& pos)
 void dae::GameObject::SetPositionDirty()
 {
 	m_positionIsDirty = true;
+	for (auto& child : m_children)
+	{
+		child->SetPositionDirty();
+	}
 }
 
 void dae::GameObject::RemoveComp()
