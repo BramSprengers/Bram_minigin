@@ -30,44 +30,175 @@ void dae::ImGuiComponent::Render() const
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
-	//ImGui::ShowDemoWindow();
 
 
 
 	ImGui::SetNextWindowSize(ImVec2(500, 700), ImGuiCond_FirstUseEver);
 	ImGui::Begin("exercise 1:", open, flags);
+	{
+		static int* i = new int(10);
+		ImGui::InputInt("#samples", i);
 
-	static int* i = new int(10);
-	ImGui::InputInt("#samples", i);
+		static std::vector<float> intTime;
+		static int* button = 0;
+		static std::vector<float>::iterator intRes;
 
-	//float testx[10];
+		if (button != 0)
+		{
+			ImGui::Text("wait for it");
+			intTime = Trashing(*i, TrashType::intTrashing);
+			intRes = std::max_element(intTime.begin(), intTime.end());
+			button = 0;
+		}
+		else
+		{
+			if (ImGui::Button("trash te sistem")) ++button;
+		}
 
-	std::vector<float> testy;
+		if (intTime.size() > 0)
+		{
+			ImGui::PlotConfig conf;
+			//conf.values.xs = testx; // this line is optional
+			conf.values.ys = intTime.data();
+			conf.values.count = (int)intTime.size();
+			conf.scale.min = 0;
+			conf.scale.max = intRes[0];
+			conf.tooltip.show = true;
+			conf.tooltip.format = "x=%.2f, y=%.2f";
+			conf.grid_x.show = true;
+			conf.grid_x.size = 128;
+			conf.grid_x.subticks = 4;
+			conf.grid_y.show = true;
+			conf.grid_y.size = 0.5f;
+			conf.grid_y.subticks = 5;
+			conf.selection.start = &selection_start;
+			conf.selection.length = &selection_length;
+			conf.values.color = ImColor(0, 255, 0);
+			conf.frame_size = ImVec2(400, 400);
+			conf.line_thickness = 2.f;
 
-	testy = IntTrashing(*i);
+			ImGui::Plot("plot", conf);
+		}
+	}
+	ImGui::End();
 
-	auto res = std::max_element(testy.begin(), testy.end());
+	ImGui::SetNextWindowSize(ImVec2(500, 700), ImGuiCond_FirstUseEver);
+	ImGui::Begin("exercise 2:", open, flags);
+	{
 
-	ImGui::PlotConfig conf;
-	//conf.values.xs = testx; // this line is optional
-	conf.values.ys = testy.data();
-	conf.values.count = (int)testy.size();
-	conf.scale.min = 0;
-	conf.scale.max = res[0];
-	conf.tooltip.show = true;
-	conf.tooltip.format = "x=%.2f, y=%.2f";
-	conf.grid_x.show = true;
-	conf.grid_x.size = 128;
-	conf.grid_x.subticks = 4;
-	conf.grid_y.show = true;
-	conf.grid_y.size = 0.5f;
-	conf.grid_y.subticks = 5;
-	conf.selection.start = &selection_start;
-	conf.selection.length = &selection_length;
-	conf.frame_size = ImVec2(400, 400);
-	conf.line_thickness = 2.f;
+		static int* i = new int(10);
+		ImGui::InputInt("#samples", i);
 
-	ImGui::Plot("plot", conf);
+		static std::vector<float> obnp;
+		static std::vector<float> obwp;
+		static int* pButton = 0;
+		static int* npButton = 0;
+		static std::vector<float>::iterator obnpRes;
+		static std::vector<float>::iterator obwpRes;
+
+		if (pButton != 0)
+		{
+			ImGui::Text("wait for it");
+			obnp = Trashing(*i, TrashType::GOWithoutPointer);
+			obnpRes = std::max_element(obnp.begin(), obnp.end());
+			pButton = 0;
+		}
+		else
+		{
+			if (ImGui::Button("trash without pointer")) ++pButton;
+		}
+
+		if (npButton != 0)
+		{
+			ImGui::Text("wait for it");
+			obwp = Trashing(*i, TrashType::GOWithPointer);
+			obwpRes = std::max_element(obwp.begin(), obwp.end());
+			npButton = 0;
+		}
+		else
+		{
+			if (ImGui::Button("trash with pointer")) ++npButton;
+		}
+
+		if (obnp.size() > 0)
+		{
+			ImGui::PlotConfig conf;
+			//conf.values.xs = testx; // this line is optional
+			conf.values.ys = obnp.data();
+			conf.values.count = (int)obnp.size();
+			conf.scale.min = 0;
+			conf.scale.max = obnpRes[0];
+			conf.tooltip.show = true;
+			conf.tooltip.format = "x=%.2f, y=%.2f";
+			conf.grid_x.show = true;
+			conf.grid_x.size = 128;
+			conf.grid_x.subticks = 4;
+			conf.grid_y.show = true;
+			conf.grid_y.size = 0.5f;
+			conf.grid_y.subticks = 5;
+			conf.selection.start = &selection_start;
+			conf.selection.length = &selection_length;
+			conf.values.color = ImColor(122, 0, 255);
+			conf.frame_size = ImVec2(400, 300);
+			conf.line_thickness = 2.f;
+
+			ImGui::Plot("plot1", conf);
+		}
+
+		if (obwp.size() > 0)
+		{
+			ImGui::PlotConfig conf;
+			//conf.values.xs = testx; // this line is optional
+			conf.values.ys = obwp.data();
+			conf.values.count = (int)obwp.size();
+			conf.scale.min = 0;
+			conf.scale.max = obwpRes[0];
+			conf.tooltip.show = true;
+			conf.tooltip.format = "x=%.2f, y=%.2f";
+			conf.grid_x.show = true;
+			conf.grid_x.size = 128;
+			conf.grid_x.subticks = 4;
+			conf.grid_y.show = true;
+			conf.grid_y.size = 0.5f;
+			conf.grid_y.subticks = 5;
+			conf.selection.start = &selection_start;
+			conf.selection.length = &selection_length;
+			conf.values.color = ImColor(255, 122, 0);
+			conf.frame_size = ImVec2(400, 300);
+			conf.line_thickness = 2.f;
+
+			ImGui::Plot("plot2", conf);
+		}
+
+		if (obwp.size() > 0 && obnp.size() > 0)
+		{
+			static const float* y_data[] = { obwp.data(), obnp.data() };
+			static ImU32 colors[2] = { ImColor(255, 122, 0), ImColor(122, 0, 255) };
+
+			ImGui::PlotConfig conf;
+			//conf.values.xs = testx; // this line is optional
+			conf.values.ys_list = y_data;
+			conf.values.count = (int)obwp.size();
+			conf.values.ys_count = 2;
+			conf.scale.min = 0;
+			conf.scale.max = obnpRes[0];
+			conf.tooltip.show = true;
+			conf.tooltip.format = "x=%.2f, y=%.2f";
+			conf.grid_x.show = true;
+			conf.grid_x.size = 128;
+			conf.grid_x.subticks = 4;
+			conf.grid_y.show = true;
+			conf.grid_y.size = 0.5f;
+			conf.grid_y.subticks = 5;
+			conf.selection.start = &selection_start;
+			conf.selection.length = &selection_length;
+			conf.values.colors = colors;
+			conf.frame_size = ImVec2(400, 300);
+			conf.line_thickness = 2.f;
+
+			ImGui::Plot("plot3", conf);
+		}
+	}
 
 	ImGui::End();
 
@@ -75,61 +206,123 @@ void dae::ImGuiComponent::Render() const
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-std::vector<float> dae::ImGuiComponent::IntTrashing(int times) const
+std::vector<float> dae::ImGuiComponent::Trashing(unsigned int times, TrashType type) const
 {
-	std::vector<std::vector<int>> timings;
-	timings.resize(times);
-	for (int x = 0; x < times; x++)
+	if(times == 0)
 	{
-		std::vector<int> arr((const unsigned int)powf(2, 26));
+		return std::vector<float>();
+	}
+	std::vector<std::vector<int>> timings;
+	timings.resize(11);
 
+	
+
+	for (int i = 0; i < timings.size(); i++)
+	{
+		timings[i].resize(times);
+	}
+
+	for (unsigned int x = 0; x < times; x++)
+	{
+		int count{};
 		for (int stepsize = 1; stepsize <= 1024; stepsize *= 2)
 		{
-			const auto start = std::chrono::high_resolution_clock().now();
+			int total{};
 
-			for (int i = 0; i < arr.size(); i += stepsize)
+			switch (type)
 			{
-				arr[i] *= 2;
+			case dae::intTrashing:
+				total = IntTrashing(stepsize);
+				break;
+			case dae::GOWithPointer:
+				total = OBWTrashing(stepsize);
+				break;
+			case dae::GOWithoutPointer:
+				total = OBNTrashing(stepsize);
+				break;
+			default:
+				break;
 			}
-
-			const auto end = std::chrono::high_resolution_clock().now();
-
-			const int total = (int)std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-
-			timings[x].push_back(total);
+			
+			timings[count][x] = total;
+			++count;
 		}
 	}
 
-	std::vector<float> rounded;
+	std::vector<float> rounded(timings.size());
+
+	for (int i = 0; i < rounded.size(); i++)
+	{
+		auto min = std::min_element(timings[i].begin(), timings[i].end());
+		auto max = std::min_element(timings[i].begin(), timings[i].end());
+
+		for (unsigned int j = 0; j < times; j++)
+		{
+			rounded[i] += timings[i][j];
+		}
+
+		rounded[i] -= min[0] + max[0];
+
+			rounded[i] /= times;
+	}
 
 
 	return rounded;
 }
 
-std::vector<float> dae::ImGuiComponent::OBTrashing(int times) const
+//this can be better
+int dae::ImGuiComponent::OBWTrashing(int stepsize) const
 {
-	for (int x = 0; x < times; x++)
+
+	std::vector<GameObject3DWithP> arr((const unsigned int)powf(2, 26));
+
+	const auto start = std::chrono::high_resolution_clock().now();
+
+	for (int i = 0; i < arr.size(); i += stepsize)
 	{
-		for (int stepsize = 1; stepsize <= 1024; stepsize *= 2)
-		{
-			std::vector<GameObject3D> arr((const unsigned int)powf(2, 26));
-
-			const auto start = std::chrono::high_resolution_clock().now();
-
-			for (int i = 0; i < arr.size(); i += stepsize)
-			{
-				arr[i].ID *= 2;
-			}
-
-			const auto end = std::chrono::high_resolution_clock().now();
-
-			const auto total = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-
-			std::cout << total << " " << std::endl;
-		}
+		arr[i].ID *= 2;
 	}
 
-	return std::vector<float>();
+	const auto end = std::chrono::high_resolution_clock().now();
+
+	std::cout << (int)(1000 * std::chrono::duration<float>(end - start).count()) << std::endl;
+
+	return (int)(1000 * std::chrono::duration<float>(end - start).count());
+}
+
+int dae::ImGuiComponent::OBNTrashing(int stepsize) const
+{
+	std::vector<GameObject3DNoP> arr((const unsigned int)powf(2, 26));
+
+	const auto start = std::chrono::high_resolution_clock().now();
+
+	for (int i = 0; i < arr.size(); i += stepsize)
+	{
+		arr[i].ID *= 2;
+	}
+
+	const auto end = std::chrono::high_resolution_clock().now();
+
+	std::cout << (int)(1000 * std::chrono::duration<float>(end - start).count()) << std::endl;
+
+	return (int)(1000 * std::chrono::duration<float>(end - start).count());
+}
+
+int dae::ImGuiComponent::IntTrashing(int stepsize) const
+{
+
+	std::vector<int> arr((const unsigned int)powf(2, 26));
+
+	const auto start = std::chrono::high_resolution_clock().now();
+
+	for (int i = 0; i < arr.size(); i += stepsize)
+	{
+		arr[i] *= 2;
+	}
+
+	const auto end = std::chrono::high_resolution_clock().now();
+
+	return (int)(1000 * std::chrono::duration<float>(end - start).count());
 }
 
 

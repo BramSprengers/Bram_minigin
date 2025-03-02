@@ -4,6 +4,13 @@
 
 namespace dae
 {
+	enum TrashType
+	{
+		intTrashing,
+		GOWithPointer,
+		GOWithoutPointer
+	};
+
 	struct T
 	{
 		float matrix[16] = {
@@ -13,10 +20,17 @@ namespace dae
 			0,0,0,1 };
 	};
 
-	class GameObject3D
+	class GameObject3DWithP
 	{
 	public:
 		dae::T* transform;
+		int ID;
+	};
+
+	class GameObject3DNoP
+	{
+	public:
+		dae::T transform;
 		int ID;
 	};
 
@@ -37,9 +51,11 @@ namespace dae
 
 	private:
 
-		std::vector<float> IntTrashing(int times) const;
-		std::vector<float> OBTrashing(int times) const;
-
+		std::vector<float> Trashing(unsigned int times, TrashType type) const;
+		
+		int OBWTrashing(int stepsize) const;
+		int OBNTrashing(int stepsize) const;
+		int IntTrashing(int stepsize) const;
 	};
 }
 
