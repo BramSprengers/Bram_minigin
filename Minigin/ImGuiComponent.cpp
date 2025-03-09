@@ -27,12 +27,6 @@ void dae::ImGuiComponent::Render() const
 
 	static uint32_t selection_start = 0, selection_length = 0;
 
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-
-
-
 	ImGui::SetNextWindowSize(ImVec2(500, 700), ImGuiCond_FirstUseEver);
 	ImGui::Begin("exercise 1:", open, flags);
 	{
@@ -201,9 +195,6 @@ void dae::ImGuiComponent::Render() const
 	}
 
 	ImGui::End();
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 std::vector<float> dae::ImGuiComponent::Trashing(unsigned int times, TrashType type) const

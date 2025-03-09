@@ -96,6 +96,9 @@
     <ClInclude Include="ImGuiComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ControlerComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -168,6 +171,9 @@
       <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlerComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
