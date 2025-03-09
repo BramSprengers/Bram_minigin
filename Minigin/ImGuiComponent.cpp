@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <chrono>
+#include <memory>
 
 void dae::ImGuiComponent::Update(float)
 {
@@ -23,30 +24,31 @@ void dae::ImGuiComponent::Render() const
 	flags |= ImGuiWindowFlags_NoResize;
 	flags |= ImGuiWindowFlags_NoSavedSettings;
 
-	bool* open = new bool(true);
+	static std::unique_ptr<bool> open = std::make_unique<bool>(true);
 
 	static uint32_t selection_start = 0, selection_length = 0;
 
 	ImGui::SetNextWindowSize(ImVec2(500, 700), ImGuiCond_FirstUseEver);
-	ImGui::Begin("exercise 1:", open, flags);
+	ImGui::Begin("exercise 1:", open.get(), flags);
 	{
-		static int* i = new int(10);
-		ImGui::InputInt("#samples", i);
+		static std::unique_ptr<int> i = std::make_unique<int>(10);
+		ImGui::InputInt("#samples", i.get());
 
 		static std::vector<float> intTime;
-		static int* button = 0;
+		static std::unique_ptr<int> button = std::make_unique<int>(0);
 		static std::vector<float>::iterator intRes;
 
-		if (button != 0)
+		if (*button != 0)
 		{
 			ImGui::Text("wait for it");
 			intTime = Trashing(*i, TrashType::intTrashing);
 			intRes = std::max_element(intTime.begin(), intTime.end());
-			button = 0;
+			*button = 0;
 		}
 		else
 		{
-			if (ImGui::Button("trash te sistem")) ++button;
+			if (ImGui::Button("trash te sistem")) 
+				*button.get() += 1;
 		}
 
 		if (intTime.size() > 0)
@@ -77,41 +79,43 @@ void dae::ImGuiComponent::Render() const
 	ImGui::End();
 
 	ImGui::SetNextWindowSize(ImVec2(500, 700), ImGuiCond_FirstUseEver);
-	ImGui::Begin("exercise 2:", open, flags);
+	ImGui::Begin("exercise 2:", open.get(), flags);
 	{
 
-		static int* i = new int(10);
-		ImGui::InputInt("#samples", i);
+		static std::unique_ptr<int> i = std::make_unique<int>(10);
+		ImGui::InputInt("#samples", i.get());
 
 		static std::vector<float> obnp;
 		static std::vector<float> obwp;
-		static int* pButton = 0;
-		static int* npButton = 0;
+		static std::unique_ptr<int> pButton = std::make_unique<int>(0);
+		static std::unique_ptr<int> npButton = std::make_unique<int>(0);
 		static std::vector<float>::iterator obnpRes;
 		static std::vector<float>::iterator obwpRes;
 
-		if (pButton != 0)
+		if (*pButton != 0)
 		{
 			ImGui::Text("wait for it");
 			obnp = Trashing(*i, TrashType::GOWithoutPointer);
 			obnpRes = std::max_element(obnp.begin(), obnp.end());
-			pButton = 0;
+			*pButton = 0;
 		}
 		else
 		{
-			if (ImGui::Button("trash without pointer")) ++pButton;
+			if (ImGui::Button("trash without pointer")) 
+				++*pButton;
 		}
 
-		if (npButton != 0)
+		if (*npButton != 0)
 		{
 			ImGui::Text("wait for it");
 			obwp = Trashing(*i, TrashType::GOWithPointer);
 			obwpRes = std::max_element(obwp.begin(), obwp.end());
-			npButton = 0;
+			*npButton = 0;
 		}
 		else
 		{
-			if (ImGui::Button("trash with pointer")) ++npButton;
+			if (ImGui::Button("trash with pointer")) 
+				++*npButton;
 		}
 
 		if (obnp.size() > 0)
@@ -208,7 +212,7 @@ std::vector<float> dae::ImGuiComponent::Trashing(unsigned int times, TrashType t
 
 	
 
-	for (int i = 0; i < timings.size(); i++)
+	for (unsigned int i = 0; i < timings.size(); i++)
 	{
 		timings[i].resize(times);
 	}
@@ -242,7 +246,7 @@ std::vector<float> dae::ImGuiComponent::Trashing(unsigned int times, TrashType t
 
 	std::vector<float> rounded(timings.size());
 
-	for (int i = 0; i < rounded.size(); i++)
+	for (unsigned int i = 0; i < rounded.size(); i++)
 	{
 		auto min = std::min_element(timings[i].begin(), timings[i].end());
 		auto max = std::min_element(timings[i].begin(), timings[i].end());
@@ -269,7 +273,7 @@ int dae::ImGuiComponent::OBWTrashing(int stepsize) const
 
 	const auto start = std::chrono::high_resolution_clock().now();
 
-	for (int i = 0; i < arr.size(); i += stepsize)
+	for (unsigned int i = 0; i < arr.size(); i += stepsize)
 	{
 		arr[i].ID *= 2;
 	}
@@ -287,7 +291,7 @@ int dae::ImGuiComponent::OBNTrashing(int stepsize) const
 
 	const auto start = std::chrono::high_resolution_clock().now();
 
-	for (int i = 0; i < arr.size(); i += stepsize)
+	for (unsigned int i = 0; i < arr.size(); i += stepsize)
 	{
 		arr[i].ID *= 2;
 	}
@@ -306,7 +310,7 @@ int dae::ImGuiComponent::IntTrashing(int stepsize) const
 
 	const auto start = std::chrono::high_resolution_clock().now();
 
-	for (int i = 0; i < arr.size(); i += stepsize)
+	for (unsigned int i = 0; i < arr.size(); i += stepsize)
 	{
 		arr[i] *= 2;
 	}
