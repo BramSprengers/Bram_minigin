@@ -1,4 +1,5 @@
 #include "RotationComponent.h"
+#include <iostream>
 
 void dae::RotationComponent::Update(float deltaTime)
 {
