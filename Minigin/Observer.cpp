@@ -3,6 +3,8 @@
 #include "TextObject.h"
 #include <iostream>
 
+#include <steam_api.h>
+
 void dae::GamePlay::OnNotify(GameObject* ob, const Event& event)
 {
 	PlayerComp* comp = (PlayerComp*)ob->GetComponent(PlayerComp(nullptr, 0));
@@ -13,9 +15,10 @@ void dae::GamePlay::OnNotify(GameObject* ob, const Event& event)
 	case dae::Event::POINT_INCREASE:
 		if (comp != nullptr)
 		{
-			if (comp->GetScore() == 500)
+			if (comp->GetScore() >= 500)
 			{
-				//unlock achievment
+				g_SteamAchievements->SetAchievement("ACH_WIN_ONE_GAME");
+				
 			}
 		}
 	case dae::Event::TOOK_DAMAGE:

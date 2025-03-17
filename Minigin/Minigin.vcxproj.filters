@@ -108,6 +108,9 @@
     <ClInclude Include="PlayerComp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="steamAchievements.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -192,6 +195,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayerComp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="steamAchievements.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

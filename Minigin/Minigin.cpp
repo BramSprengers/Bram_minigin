@@ -97,6 +97,8 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 	while (doContinue)
 	{
+		SteamAPI_RunCallbacks();
+
 		const auto start{ std::chrono::high_resolution_clock::now() };
 		const float deltaTime{ std::chrono::duration<float>(start - lastTime).count() };
 

@@ -5,7 +5,7 @@
 dae::BaseComponent::~BaseComponent()
 {
 	m_pOwner = nullptr;
-	for (int i = 0; i < m_observer.size(); i++)
+	for (int i = 0; i < (int)m_observer.size(); i++)
 	{
 		delete m_observer[i];
 	}
