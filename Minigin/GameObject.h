@@ -44,6 +44,8 @@ namespace dae
 		size_t GetChildCount() const { return m_children.size(); }
 		GameObject* GetChildAt(unsigned int idx) const { return m_children[idx]; }
 
+		BaseComponent* GetComponent(const BaseComponent& comp);
+
 	private:
 		bool m_IsDead{ false };
 

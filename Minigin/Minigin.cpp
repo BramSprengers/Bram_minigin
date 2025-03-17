@@ -88,7 +88,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 
 	const auto ms_per_frame{ 60 };
-	const float fixedSteps{ 0.08f };
+	//const float fixedSteps{ 0.08f };
 
 	// todo: this update loop could use some work.
 	bool doContinue = true;
@@ -103,13 +103,13 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		lastTime = start;
 		lag += deltaTime;
 
-		doContinue = input.ProcessInput();
+		doContinue = input.ProcessInput(deltaTime);
 
-		while (lag >= fixedSteps)
+		/*while (lag >= fixedSteps)
 		{
 			sceneManager.Fixed_Update(fixedSteps);
 			lag -= fixedSteps;
-		}
+		}*/
 
 		sceneManager.Update(deltaTime);
 		renderer.Render();

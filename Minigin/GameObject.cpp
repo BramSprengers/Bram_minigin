@@ -71,6 +71,18 @@ const glm::vec3& dae::GameObject::GetWorldPosition()
 		UpdateWorldPosition();
 	return m_worldPosition;
 }
+dae::BaseComponent* dae::GameObject::GetComponent(const BaseComponent& comp)
+{
+	for (auto base : m_Components)
+	{
+		if (typeid(*base) == typeid(comp))
+		{
+			return base;
+		}
+	}
+
+	return nullptr;
+}
 void dae::GameObject::UpdateWorldPosition()
 {
 	if (m_positionIsDirty)

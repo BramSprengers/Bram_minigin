@@ -5,20 +5,22 @@
 #include <Xinput.h>
 #include <glm.hpp>
 
+#include "Observer.h"
+
 namespace dae
 {
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
-		bool ProcessInput();
-		void HandleControlerMoveInput();
+		bool ProcessInput(float deltaTime);
+		void HandleControlerMoveInput(float deltaTime);
 
 		bool IsDown(unsigned int button) const { return buttonsPressedThisFrame & button; }
 		bool IsUp(unsigned int button) const { return buttonsReleasedThisFrame & button; }
 		bool IsPressed(unsigned int button) const { return state.Gamepad.wButtons & button; }
 
-		void SetPlayerOne(MoveComponent* player) { m_PlayerOne = player; }
-		void SetPlayerTwo(MoveComponent* player) { m_PlayerTwo = player; }
+		void SetPlayerOne(GameObject* player) { m_PlayerOne = player; }
+		void SetPlayerTwo(GameObject* player) { m_PlayerTwo = player; }
 
 		glm::vec2 LeftStick() const { 
 			int x = state.Gamepad.sThumbLX;
@@ -51,8 +53,8 @@ namespace dae
 
 		int deadZone{ 2000 };
 
-		dae::MoveComponent* m_PlayerOne{};
-		dae::MoveComponent* m_PlayerTwo{};
+		dae::GameObject* m_PlayerOne{};
+		dae::GameObject* m_PlayerTwo{};
 	};
 
 }

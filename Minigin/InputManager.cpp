@@ -5,9 +5,11 @@
 #include <imgui_impl_sdl2.h>
 #include <iostream>
 
-bool dae::InputManager::ProcessInput()
+#include "PlayerComp.h"
+
+bool dae::InputManager::ProcessInput(float deltaTime)
 {
-	dae::MoveCommand(m_PlayerTwo, { 0,0 }).Execute();
+	dae::Move(m_PlayerTwo, { 0,0 }).Execute(deltaTime);
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -23,20 +25,39 @@ bool dae::InputManager::ProcessInput()
 			if (keys[SDL_SCANCODE_W])
 			{
 				--dirY;
-				dae::MoveCommand(m_PlayerTwo, { dirX,dirY }).Execute();
+				dae::Move(m_PlayerTwo, { dirX,dirY }).Execute(deltaTime);
 			}
-			if (keys[SDL_SCANCODE_S]) {
+			if (keys[SDL_SCANCODE_S]) 
+			{
 				++dirY;
-				dae::MoveCommand(m_PlayerTwo, { dirX,dirY }).Execute();
+				dae::Move(m_PlayerTwo, { dirX,dirY }).Execute(deltaTime);
 			}
-			if (keys[SDL_SCANCODE_A]) {
+			if (keys[SDL_SCANCODE_A]) 
+			{
 				--dirX;
-				dae::MoveCommand(m_PlayerTwo, { dirX,dirY }).Execute();
+				dae::Move(m_PlayerTwo, { dirX,dirY }).Execute(deltaTime);
 			};
-			if (keys[SDL_SCANCODE_D]) {
+			if (keys[SDL_SCANCODE_D]) 
+			{
 				++dirX;
-				dae::MoveCommand(m_PlayerTwo, { dirX,dirY }).Execute();
+				dae::Move(m_PlayerTwo, { dirX,dirY }).Execute(deltaTime);
 			};
+			if (keys[SDL_SCANCODE_SPACE])
+			{
+				PlayerComp* comp = (PlayerComp*)m_PlayerOne->GetComponent(PlayerComp(nullptr, 0));
+				if (comp != nullptr)
+				{
+					comp->TakeDamage(1);
+				}
+			}
+			if (keys[SDL_SCANCODE_C])
+			{
+				PlayerComp* comp = (PlayerComp*)m_PlayerOne->GetComponent(PlayerComp(nullptr, 0));
+				if (comp != nullptr)
+				{
+					comp->AddScore(100);
+				}
+			}
 		}
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			
@@ -61,7 +82,7 @@ bool dae::InputManager::ProcessInput()
 			buttonsPressedThisFrame = buttonChanges & state.Gamepad.wButtons;
 			buttonsReleasedThisFrame = buttonChanges & (~state.Gamepad.wButtons);
 
-			HandleControlerMoveInput();
+			HandleControlerMoveInput(deltaTime);
 		}
 	}
 
@@ -69,30 +90,46 @@ bool dae::InputManager::ProcessInput()
 }
 
 
-void dae::InputManager::HandleControlerMoveInput()
+void dae::InputManager::HandleControlerMoveInput(float deltaTime)
 {
 	float dirX{}, dirY{};
 
-	dae::MoveCommand(m_PlayerOne, { dirX,dirY }).Execute();
+	dae::Move(m_PlayerOne, { dirX,dirY }).Execute(deltaTime);
 
 	if (IsPressed(XINPUT_GAMEPAD_DPAD_UP))
 	{
 		--dirY;
-		dae::MoveCommand(m_PlayerOne, {dirX,dirY}).Execute();
+		dae::Move(m_PlayerOne, {dirX,dirY}).Execute(deltaTime);
 	}
 	if (IsPressed(XINPUT_GAMEPAD_DPAD_DOWN))
 	{
 		++dirY;
-		dae::MoveCommand(m_PlayerOne, { dirX,dirY }).Execute();
+		dae::Move(m_PlayerOne, { dirX,dirY }).Execute(deltaTime);
 	}
 	if (IsPressed(XINPUT_GAMEPAD_DPAD_LEFT)) 
 	{
 		--dirX;
-		dae::MoveCommand(m_PlayerOne, { dirX,dirY }).Execute();
-	};
+		dae::Move(m_PlayerOne, { dirX,dirY }).Execute(deltaTime);
+	}
 	if (IsPressed(XINPUT_GAMEPAD_DPAD_RIGHT)) 
 	{
 		++dirX;
-		dae::MoveCommand(m_PlayerOne, { dirX,dirY }).Execute();
-	};
+		dae::Move(m_PlayerOne, { dirX,dirY }).Execute(deltaTime);
+	}
+	if (IsPressed(XINPUT_GAMEPAD_A))
+	{
+		PlayerComp* comp = (PlayerComp*)m_PlayerTwo->GetComponent(PlayerComp(nullptr, 0));
+		if (comp != nullptr)
+		{
+			comp->TakeDamage(1);
+		}
+	}
+	if (IsPressed(XINPUT_GAMEPAD_B))
+	{
+		PlayerComp* comp = (PlayerComp*)m_PlayerTwo->GetComponent(PlayerComp(nullptr, 0));
+		if (comp != nullptr)
+		{
+			comp->AddScore(100);
+		}
+	}
 }
