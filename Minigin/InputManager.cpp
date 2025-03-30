@@ -5,7 +5,7 @@
 #include <imgui_impl_sdl2.h>
 #include <iostream>
 
-#include "PlayerComp.h"
+//#include "PlayerComp.h"
 
 bool dae::InputManager::ProcessInput(float deltaTime)
 {
@@ -44,18 +44,18 @@ bool dae::InputManager::ProcessInput(float deltaTime)
 			};
 			if (keys[SDL_SCANCODE_SPACE])
 			{
-				PlayerComp* comp = (PlayerComp*)m_PlayerOne->GetComponent(PlayerComp(nullptr, 0));
-				if (comp != nullptr)
+				//PlayerComp* comp = (PlayerComp*)m_PlayerOne->GetComponent(PlayerComp(nullptr, 0));
+				//if (comp != nullptr)
 				{
-					comp->TakeDamage(1);
+					//comp->TakeDamage(1);
 				}
 			}
 			if (keys[SDL_SCANCODE_C])
 			{
-				PlayerComp* comp = (PlayerComp*)m_PlayerOne->GetComponent(PlayerComp(nullptr, 0));
-				if (comp != nullptr)
+				//PlayerComp* comp = (PlayerComp*)m_PlayerOne->GetComponent(PlayerComp(nullptr, 0));
+				//if (comp != nullptr)
 				{
-					comp->AddScore(100);
+					//comp->AddScore(100);
 				}
 			}
 		}
@@ -118,18 +118,18 @@ void dae::InputManager::HandleControlerMoveInput(float deltaTime)
 	}
 	if (IsPressed(XINPUT_GAMEPAD_A))
 	{
-		PlayerComp* comp = (PlayerComp*)m_PlayerTwo->GetComponent(PlayerComp(nullptr, 0));
-		if (comp != nullptr)
+		//PlayerComp* comp = (PlayerComp*)m_PlayerTwo->GetComponent(PlayerComp(nullptr, 0));
+		//if (comp != nullptr)
 		{
-			comp->TakeDamage(1);
+			//comp->TakeDamage(1);
 		}
 	}
 	if (IsPressed(XINPUT_GAMEPAD_B))
 	{
-		PlayerComp* comp = (PlayerComp*)m_PlayerTwo->GetComponent(PlayerComp(nullptr, 0));
-		if (comp != nullptr)
+		//PlayerComp* comp = (PlayerComp*)m_PlayerTwo->GetComponent(PlayerComp(nullptr, 0));
+		//if (comp != nullptr)
 		{
-			comp->AddScore(100);
+			//comp->AddScore(100);
 		}
 	}
 }
