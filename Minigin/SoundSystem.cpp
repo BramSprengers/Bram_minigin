@@ -36,7 +36,7 @@ void dae::SoundSystem::play()
 
     result = ma_sound_init_from_file(&engine, link.c_str(),0 ,nullptr , nullptr, &sound);
 
-    if (result != MA_SUCCESS) std::cout << "Could not load file: " << result << " \n";
+    if (result != MA_SUCCESS) std::cout << "it is at the moment bugged, cant open file. have a fish instead\n>)))°> \n";
 
     ma_sound_start(&sound);
 
