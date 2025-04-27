@@ -20,10 +20,18 @@
 #include "InputManager.h"
 #include <chrono>
 #include "PlayerComp.h"
+#include "SoundSystem.h"
 //#include "Observer.h"
 
 void load()
 {
+//#if _DEBUG
+//	dae::servicelocator::register_sound_system(
+//		std::make_unique<dae::LoggingSoundSystem>(std::make_unique<dae::SoundSystem>()));
+//#else
+//	dae::servicelocator::register_sound_system(std::make_unique<dae::SoundSystem>());
+//#endif
+
 	auto& input = dae::InputManager::GetInstance();
 
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");

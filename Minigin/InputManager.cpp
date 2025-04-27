@@ -5,11 +5,15 @@
 #include <imgui_impl_sdl2.h>
 #include <iostream>
 
+#include "SoundSystem.h"
+
 //#include "PlayerComp.h"
 
 bool dae::InputManager::ProcessInput(float deltaTime)
 {
 	dae::Move(m_PlayerTwo, { 0,0 }).Execute(deltaTime);
+
+	auto& test = dae::SoundSystem::instance();
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -44,6 +48,8 @@ bool dae::InputManager::ProcessInput(float deltaTime)
 			};
 			if (keys[SDL_SCANCODE_SPACE])
 			{
+				test.play();
+
 				//PlayerComp* comp = (PlayerComp*)m_PlayerOne->GetComponent(PlayerComp(nullptr, 0));
 				//if (comp != nullptr)
 				{
